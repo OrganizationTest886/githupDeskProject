@@ -1,0 +1,29 @@
+一、解压后，就是安装。目录为：/opt/local/zookeeper
+
+二、conf目录为配置文件目录。zoo_sample.cfg为样例配置文件，需要修改为自己的名称，为zoo.cfg。
+
+
+三、在集群模式下，所有的zk进程可以使用相同的配置文件zoo.cfg，添加如下配置：
+
+
+dataDir=/opt/local/zookeeper/data
+dataLogDir=/opt/local/zookeeper/datalog
+
+server.1=10.30.46.133:2887:3887
+server.2=10.80.236.82:2887:3887
+server.3=10.31.147.180:2887:3887
+
+
+四、在zookeeper目录下创建两个文件夹，data和logs和datalog。
+在dataDir目录（/opt/local/zookeeper/data目录）下，创建一个myid文件，其内容分别为1，2，3。
+10.30.46.133   对应1
+10.80.236.82   对应2
+10.31.147.180  对应3
+
+
+五、在bin目录下的zkEnv.sh文件中设置环境变量ZOO_LOG_DIR为zookeeper的日志存放目录：
+export ZOO_LOG_DIR=/opt/local/zookeeper/logs
+将这一行放在ZOOKEEPER_PREFIX之后。
+
+
+五、然后分别在这三台机器上启动zk进程，这样我们便将zk集群启动了起来。bin目录下的./zkServer.sh start启动。
